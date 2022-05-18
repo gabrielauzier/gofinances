@@ -14,16 +14,18 @@ import {
 interface Category {
   key: string;
   name: string;
+  icon: string;
 }
 
 export interface Transaction {
+  type: "income" | "outcome";
   title: string;
   amount: string;
   category: Category;
   date: string;
 }
 
-interface TransactionCardProps {
+export interface TransactionCardProps {
   data: Transaction;
 }
 
@@ -31,10 +33,13 @@ export function TransactionCard({ data }: TransactionCardProps) {
   return (
     <Container>
       <Title>{data.title}</Title>
-      <Amount>{data.amount}</Amount>
+      <Amount type={data.type}>
+        {data.type === "outcome" && "- "}
+        {data.amount}
+      </Amount>
       <Footer>
         <Category>
-          <Icon name="dollar-sign" size={15} />
+          <Icon name={data.category.icon} size={20} />
           <CategoryName>{data.category.name}</CategoryName>
         </Category>
         <Date>{data.date}</Date>

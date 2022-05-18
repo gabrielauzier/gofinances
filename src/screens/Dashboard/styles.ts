@@ -1,5 +1,7 @@
 import styled from "styled-components/native";
 import { Feather } from "@expo/vector-icons";
+import { FlatList, FlatListProps } from "react-native";
+import { DataListProps } from ".";
 
 export const Container = styled.View`
   flex: 1;
@@ -74,4 +76,8 @@ export const TransactionsTitle = styled.Text`
   margin-bottom: 16px;
 `;
 
-export const TransactionsList = styled.FlatList``;
+export const TransactionsList = styled(
+  FlatList as new (
+    props: FlatListProps<DataListProps>
+  ) => FlatList<DataListProps>
+)``;
