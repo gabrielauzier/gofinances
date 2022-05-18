@@ -12,7 +12,9 @@ export default function CategorySelectButton({
 }: Props) {
   return (
     <Container activeOpacity={0.7} onPress={onCategoryModalOpen}>
-      <CategoryName>{category}</CategoryName>
+      <CategoryName isSelected={category !== "category"}>
+        {category}
+      </CategoryName>
       <Icon name="keyboard-arrow-down" size={20} />
     </Container>
   );
