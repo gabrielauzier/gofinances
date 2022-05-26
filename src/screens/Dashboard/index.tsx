@@ -19,6 +19,8 @@ import {
 import { ActivityIndicator } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
+import { useAuth } from "../../hooks/auth";
+import { TouchableOpacity } from "react-native";
 
 export interface DataListProps extends Transaction {
   id: string;
@@ -38,6 +40,8 @@ interface HighlightData {
 const collectionKey = "@gofinances:transactions";
 
 export function Dashboard() {
+  const { user, signOut } = useAuth();
+
   const [transactions, setTransactions] = useState<DataListProps[]>([]);
   const [isLoadingData, setIsLoadingData] = useState(true);
   const [highlightData, setHighlightData] = useState<HighlightData>(
@@ -160,15 +164,17 @@ export function Dashboard() {
               <UserInfo>
                 <Photo
                   source={{
-                    uri: "https://avatars.githubusercontent.com/u/63938494?v=4",
+                    uri: user.photo,
                   }}
                 />
                 <User>
                   <UserGreeting>Olá,</UserGreeting>
-                  <UserName>Gabriel</UserName>
+                  <UserName>{user.name}</UserName>
                 </User>
               </UserInfo>
-              <Icon name="power" size={24} />
+              <TouchableOpacity onPress={signOut}>
+                <Icon name="power" size={24} />
+              </TouchableOpacity>
             </UserWrapper>
           </Header>
 

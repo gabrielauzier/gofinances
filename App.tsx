@@ -1,6 +1,7 @@
 import React from "react";
 import "intl";
 import "intl/locale-data/jsonp/pt-BR";
+import "react-native-gesture-handler";
 
 import { ThemeProvider } from "styled-components";
 import {
@@ -11,11 +12,10 @@ import {
 } from "@expo-google-fonts/poppins";
 import theme from "./src/global/theme";
 
-import { NavigationContainer } from "@react-navigation/native";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
-import AppLoading from "expo-app-loading";
-import { AppRoutes } from "./src/routes/app.routes";
+import { AuthProvider, useAuth } from "./src/hooks/auth";
+import { Routes } from "./src/routes";
 
 export default function App() {
   SplashScreen.preventAutoHideAsync();
@@ -33,10 +33,11 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <NavigationContainer>
-        <StatusBar style="light" />
-        <AppRoutes />
-      </NavigationContainer>
+      <StatusBar style="light" />
+
+      <AuthProvider>
+        <Routes />
+      </AuthProvider>
     </ThemeProvider>
   );
 }

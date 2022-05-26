@@ -38,5 +38,5 @@ export const Footer = styled.View`
 
 export const Buttons = styled.View`
   padding: 0 32px;
-  margin-top: -12px;
+  margin-top: -28px;
 `;
