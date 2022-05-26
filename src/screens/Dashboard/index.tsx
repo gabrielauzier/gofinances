@@ -51,12 +51,18 @@ export function Dashboard() {
     collection: DataListProps[],
     type: "income" | "outcome"
   ) {
+    const collectionFiltered = collection.filter(
+      (transaction) => transaction.type === type
+    );
+
+    if (collectionFiltered.length === 0) return null;
+
     const lastTransaction = new Date(
       Math.max.apply(
         Math,
-        collection
-          .filter((transaction) => transaction.type === type)
-          .map((transaction) => new Date(transaction.date).getTime())
+        collectionFiltered.map((transaction) =>
+          new Date(transaction.date).getTime()
+        )
       )
     );
 
@@ -108,7 +114,9 @@ export function Dashboard() {
       transactions,
       "outcome"
     );
-    const totalDateInterval = `01 a ${lastOutcomeTransactionDate}`;
+    const totalDateInterval = !lastOutcomeTransactionDate
+      ? "Sem registros"
+      : `01 a ${lastOutcomeTransactionDate}`;
 
     const total = incomesTotal - outcomesTotal;
 
@@ -118,14 +126,18 @@ export function Dashboard() {
           style: "currency",
           currency: "BRL",
         }),
-        lastTransaction: `Última entrada dia ${lastIncomeTransactionDate}`,
+        lastTransaction: !lastIncomeTransactionDate
+          ? "Sem registros"
+          : `Última entrada dia ${lastIncomeTransactionDate}`,
       },
       outcomes: {
         total: outcomesTotal.toLocaleString("pt-BR", {
           style: "currency",
           currency: "BRL",
         }),
-        lastTransaction: `Última saída dia ${lastOutcomeTransactionDate}`,
+        lastTransaction: !lastOutcomeTransactionDate
+          ? "Sem registros"
+          : `Última saída dia ${lastOutcomeTransactionDate}`,
       },
       balance: {
         total: total.toLocaleString("pt-BR", {
