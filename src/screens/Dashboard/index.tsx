@@ -37,10 +37,9 @@ interface HighlightData {
   balance: HighlightProps;
 }
 
-const collectionKey = "@gofinances:transactions";
-
 export function Dashboard() {
   const { user, signOut } = useAuth();
+  const collectionKey = `@gofinances:transactions_user:${user.id}`;
 
   const [transactions, setTransactions] = useState<DataListProps[]>([]);
   const [isLoadingData, setIsLoadingData] = useState(true);

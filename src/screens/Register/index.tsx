@@ -11,14 +11,15 @@ import CategorySelectorModal from "../CategorySelectorModal";
 import { InputForm } from "../../components/Form/InputForm";
 import { useForm } from "react-hook-form";
 
-import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import uuid from "react-native-uuid";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import { useNavigation } from "@react-navigation/native";
-import { Dashboard } from "../Dashboard";
 import { NavigationProps } from "../../utils/navigation";
+import { useAuth } from "../../hooks/auth";
 
 interface FormData {
   name: string;
@@ -33,9 +34,10 @@ const schema = Yup.object().shape({
     .positive("O valor não pode ser negativo"),
 });
 
-const collectionKey = "@gofinances:transactions";
-
 export function Register() {
+  const { user } = useAuth();
+  const collectionKey = `@gofinances:transactions_user:${user.id}`;
+
   const navigation = useNavigation<NavigationProps>();
   const [transactionType, setTransactionType] = useState("");
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);

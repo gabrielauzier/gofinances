@@ -7,7 +7,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Transaction } from "../../components/TransactionCard";
 import { useFocusEffect } from "@react-navigation/native";
 import { useTheme } from "styled-components";
-const collectionKey = "@gofinances:transactions";
+import { useAuth } from "../../hooks/auth";
 
 interface CategoryData {
   name: string;
@@ -19,6 +19,9 @@ interface CategoryData {
 }
 
 export function Analytics() {
+  const { user } = useAuth();
+  const collectionKey = `@gofinances:transactions_user:${user.id}`;
+
   const theme = useTheme();
   const [totalByCategory, setTotalByCategory] = useState<CategoryData[]>([]);
 
